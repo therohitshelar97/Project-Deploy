@@ -1,0 +1,52 @@
+{% extends 'user/base.html' %}
+
+{% block title %} Pre-Order {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6 shadow border">
+           {% for i in pid %}
+           <div>
+            <figure>
+                <img src="{{i.image.url}}" height="300" width="100%" />
+                <figcaption>
+                    <h5><span>Name</span> :- <span>{{i.pname}}</span></h5>
+                    <p>
+                        <span>Delivery On</span> : <span>{{date}}</span>
+                    </p>
+                    <h5>
+                        <span>Payable Amount</span> :- <span>{{i.price}}</span>
+                    </h5>
+                </figcaption>
+            </figure>
+           </div>
+           {% endfor %}
+        </div>
+        <div class="col-lg-6 shadow border">
+            {% for i in aid %}
+            <div>
+                <h5>{{i.cname}}</h5>
+                <p>
+                    <span>{{i.flat}}</span> <span>{{i.detail}}</span>
+                    <span> {{i.pincode}}</span> <span>{{i.city}} </span>
+                    <span>{{i.state}}</span>
+                </p>
+                <h5>contact : {{i.phone}}</h5>
+                <h5>alternate_contact : {{i.alternate_phone}}</h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-6">
+            <a href="{% url 'orderconfirm' aaid ppid  %}" onclick="show()" class="btn btn-danger">Order_Confirm</a>
+        </div>
+        <div class="col-lg-6">
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

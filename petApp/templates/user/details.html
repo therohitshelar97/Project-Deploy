@@ -1,0 +1,135 @@
+{% extends 'user/base.html' %}
+
+{% block title %} Details {% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-4">
+    <div class="row shadow border">
+        {% for i in data %}
+        <div class="col-lg-6">
+              <div class="border shadow">
+                <img src="{{i.image.url}}" width="100%" height="500" class="mt-2 mb-2"/>
+              </div>
+        </div>
+        <div class="col-lg-6 detail_overflow">
+           <div class="">
+            <h1 class="h1">Name : {{i.pname}}</h1>
+            <h3>Breed : {{i.breed}}</h3>
+             <h2 class="h2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-rupee" viewBox="0 0 16 16">
+                <path d="M4 3.06h2.726c1.22 0 2.12.575 2.325 1.724H4v1.051h5.051C8.855 7.001 8 7.558 6.788 7.558H4v1.317L8.437 14h2.11L6.095 8.884h.855c2.316-.018 3.465-1.476 3.688-3.049H12V4.784h-1.345c-.08-.778-.357-1.335-.793-1.732H12V2H4z"/>
+              </svg>
+              <span>{{i.price}}</span>
+            </h2>
+            <p>
+                {{i.desc}}
+            </p>
+           </div>
+
+           <div class="row mb-3">
+            <div class="col-4">
+                
+                <a href="{% url 'orderplace' i.id %}" class="btn btn-success">Buy_Now</a>
+            </div>
+            <div class="col-4">
+                <form action="{% url 'cart' %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" value={{i.id}} name="cid" class="inhide" /> 
+                    <input type="submit" value="Add_To_Cart" class="btn btn-warning" />
+                </form>
+            </div>
+            <div class="col-4">
+              <button class="btn btn-info"  onclick="Comment(), CommentShow()">Reviews</button>
+            </div>
+           </div>
+
+           <div>
+            <a href="#"><p onclick="CommentShow()" onlclick="Comment()">View all {{comment_count}} reviews</p></a>
+           </div>
+
+           <div class="commenthide">
+            <div class="row">
+             
+              
+
+              {% for acmt in all_comments %}
+              {% if comment_count > forloop.parentloop.counter %}
+              
+              {% for user in all_users %}
+              
+              {% for user1 in user %}
+             
+              <h1>{{forloop.parentloop.parentloop.parentloop.counter}}</h1>
+              {% if acmt.user_id == user1.id %}
+              
+              <div class="col-12">
+                <h6><span><img src={{user1.image.urls}} width="20px" height="20px" style="border-radius: 50%;" /></span> {{user1.username}}</h6>
+                <p>{{acmt.comment}}</p>
+              </div>
+                   
+              {% endif %}
+              {% endfor %}
+              {% endfor %}
+              {% endif %}
+              {% endfor %}
+              
+            </div>
+           </div>
+
+           <div >
+            <form action="{% url 'addcomment' i.id i.category %}" method="post">
+              {% csrf_token %}
+              <div class="row">
+            <div class="col-8">
+              
+              
+                <input type="text" id="form" name="comment" oninput="Done()" class="form-control form" placeholder="write reviews about product" />
+             
+            </div>
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary coomentdone" id="done">Done</button>
+            
+            </div>
+          </div>
+          </form>
+
+          
+           </div>
+
+           <div>
+            <h3>Related Products</h3>
+           <div class="row mt-3">
+            {% for related in related_pets %}
+            <div class="col-lg-4">
+
+              <a href="{% url 'details' related.id related.category %}">
+                <div class="">
+                    
+                    <figure>
+                        <img src={{related.image.url}} width="100%" height="200" class="mt-2" />
+                    </figure>
+                    <figcaption>
+                        <h5>{{related.pname}}</h5>
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-rupee" viewBox="0 0 16 16">
+                            <path d="M4 3.06h2.726c1.22 0 2.12.575 2.325 1.724H4v1.051h5.051C8.855 7.001 8 7.558 6.788 7.558H4v1.317L8.437 14h2.11L6.095 8.884h.855c2.316-.018 3.465-1.476 3.688-3.049H12V4.784h-1.345c-.08-.778-.357-1.335-.793-1.732H12V2H4z"/>
+                          </svg>
+                          <span>{{related.price}}</span>
+                         
+                    </figcaption>
+                   
+                </div> 
+                </a>
+
+            </div>
+            {% endfor %}
+           </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+      
+{% endblock %}

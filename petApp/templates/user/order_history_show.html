@@ -1,0 +1,50 @@
+{% extends 'user/base.html' %}
+
+{% block title %} Order History {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+        
+        <table class="table text">
+            <tr>
+                <th>Image</th>
+                <th>Pet_Name</th>
+                <th>Amount</th>
+                <th>Address</th>
+                <th>Order_Id</th>
+            </tr>
+            {% for i in ohistory %}
+            <tr>
+                <td>
+                    <figure>
+                        <img src="{{i.image.url}}" width="100" height="100" />
+                    </figure>
+                </td>
+                <td>{{i.pname}}</td>
+                <td>{{i.price}}</td>
+                <td>
+                    <p>
+                        <span>{{i.city}}</span>
+                        <span>{{i.pincode}}</span>
+                        <span>{{i.detail}}</span>
+                        <span>{{i.state}}</span>
+                        <br>
+                        <span><b>Contact</b> : {{i.phone}}</span><br>
+                        <span><b>Alternate Contact</b>  : {{i.alternate_phone}}</span>
+                      </p>
+                </td>
+                <td>
+                    {{i.order_id}}
+                </td>
+            </tr>
+           
+            {% endfor %}
+        </table>
+        
+        
+        
+    
+</div>
+
+{% endblock  %}

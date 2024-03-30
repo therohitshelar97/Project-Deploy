@@ -1,0 +1,28 @@
+{% extends 'user/base.html' %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% block content %}
+   <div class="container mt-5">
+    {% if messages %}
+     {% for message in messages %}
+      <h4>{{message}}</h4>
+     {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-10 offset-1 shadow border">
+            <div class="mt-3">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    UserName:<input type="text" name="uname" class="form-control" />
+                    Email:<input type="email" name="email" class="form-control" />
+                    Password:<input type="password" name="pass" class="form-control" />
+                    {{form.as_p}}
+                    <input type="submit" value="Sign_Up" class="btn btn-success mt-4 mb-3" />
+                    <a href="{% url 'login' %}" class="btn btn-success mt-4 mb-3">Login</a>
+                </form>
+            </div>
+        </div>
+    </div>
+   </div>
+{% endblock %}

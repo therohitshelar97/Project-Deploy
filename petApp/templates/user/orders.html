@@ -1,0 +1,66 @@
+{% extends 'user/base.html' %}
+
+{% block title %} Your Orders  {% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+    
+    {% if ordersdata %}
+    <div class="row">
+        {% for i in ordersdata %}
+        <div class="col-lg-4 shadow">
+            <div>
+                <figure >
+                    <img src="{{i.image.url}}" class="mt-2" height="300" width="100%" />
+                    <figcaption>
+                        <h5><span>Name</span> :- <span>{{i.pname}}</span></h5>
+                        <p>
+                            {% for j in date  %}
+                            {% if i.id == j.animals_id  %}
+                            <span class="text-primary">Delivery On</span> : <span class="text-danger">{{j.delivery_date}}</span>
+                            <h5 class="">Pet Will Delivere On Below Address</h5>
+                            {% endif %}
+                            {% endfor %}
+                        </p>
+                    </figcaption>
+                </figure>
+               </div>
+               <div>
+                {% for i1 in address %}
+                    {% for j1 in date %}
+                    {% if i.id == j1.animals_id %}
+
+                    {%  if i1.id == j1.address_id  %}
+                    <div class="shadow orderaddress">
+
+                        <h4 class="">{{i1.cname}}</h4>
+                        <p>
+                          <span>{{i1.city}}</span>
+                          <span>{{i1.pincode}}</span>
+                          <span>{{i1.detail}}</span>
+                          <span>{{i1.state}}</span>
+                          
+                        </p>
+                    </div>
+                         
+                    {% endif %}
+                    {% endif %}
+
+                    {% endfor %}
+                {% endfor %}
+               </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="orderempty">
+        <h1>Haven't Place Any Order Yet</h1>
+    </div>
+    {% endif %}
+    <a href="{% url 'orderhistoryshow' %}"><button>Check Previous Orders Here</button></a>
+</div>
+
+
+{% endblock %}

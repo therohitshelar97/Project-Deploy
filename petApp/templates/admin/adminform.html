@@ -1,0 +1,90 @@
+{% extends 'admin/adminBase.html' %}
+
+{% block title %} Add Products  {% endblock %}
+
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-4">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <label for="pname">Product_Name</label>
+                <input type="text" id="pname" name="pname" class="form-control" />
+            </p>
+            <p>
+                <label for="category">Catogories_Of_Product</label>
+                <select  class="form-select" id="category" name="category" onclick="Category()">
+                    <option>Select Below Animals</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="parrot">Parrot</option>
+                    <option value="fish">Fish</option>
+                </select>
+            </p>
+            <p>
+                <label for="breed">Select Breed Of Animal</label>
+                <select class="form-select" id="breed1" name="breed">
+                    <option>Select Below Animals</option>
+                    <option id="op1"></option>
+                    <option id="op2"></option>
+                    <option id="op3"></option>
+                    <option id="op4"></option>
+                </select>
+            </p>
+            <p>
+                <label for="desc">Description</label>
+                <textarea id="desc" name="desc" class="form-control">
+
+                </textarea>
+            </p>
+            <p>
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" class="form-control" />
+            </p>
+            <p>
+                <label for="img">Upload_Image</label>
+                <input type="file" id="img" name="img" /> 
+            </p>
+            <p>
+                <input type="submit" value="Submit" class="btn btn-success" />
+            </p>
+        </form>
+    </div>
+    <div class="col-8">
+        {% if data %}
+        <table class="table table-hover">
+            <tr>
+                <th>Pet_Name</th>
+                <th>Category</th>
+                <th>Breed</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Image</th>
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{i.pname}}</td>
+                <td>{{i.category}}</td>
+                <td>{{i.breed}}</td>
+                <td>{{i.desc}}</td>
+                <td>{{i.price}}</td>
+                <td><img src={{i.image.url}} width="100" height="100"/></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+
+        <div class="no_data">
+            <h1>No-Data In Table</h1>
+        </div>
+        {% endif %}
+    </div>
+</div>
+</div> 
+
+
+
+{% endblock %}

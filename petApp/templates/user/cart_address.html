@@ -1,0 +1,71 @@
+{% extends 'user/base.html' %}
+
+{% block title %}  cart_address {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row mt-4">
+       <div class="col-lg-6">
+   
+           <form action="" method="post">
+               {% csrf_token %}
+               Enter_your_Name:<input type="text" name="name" class="form-control" />
+               City:<input type="text" name="city" class="form-control" />
+               Pincode:<input type="number" name="pincode" class="form-control" />
+               Flat/Building:<input type="text" name="flat" class="form-control" />
+               State:<input type="text" name="landmark" class="form-control" />
+               Contact : <input type="phone" name="phone" class="form-control" />
+               Alternate_Contact : <input type="phone" name="phone_a" class="form-control" />
+               <input type="submit" value="Add_Address" class="btn btn-success mt-2 " />
+           </form>
+          
+       </div>
+       <div class="col-lg-6">
+           <div class="row">
+               {% for i in address %}
+               <div class="col-lg-6 shadow border">
+                   <div class="mt-3 mb-3">
+                       <h4>
+                           <span>Customer_Name</span>:<span>{{i.cname}}</span>
+                       </h4>
+                       <p>
+                           <span>City</span>:<span>{{i.city}}</span>
+                       </p>
+                       <p>
+                           <span>Pincode</span>:<span>{{i.pincode}}</span>
+                       </p>
+                       <p>
+                           <span>Flat/Building</span>:<span>{{i.details}}</span>
+                       </p>
+                       <p>
+                           <span>State</span>:<span>{{i.state}}</span>
+                       </p>
+                       <p>
+                           <span>State</span>:<span>{{i.state}}</span>
+                       </p>
+                       <p>
+                           <h5><span>Contact</span>:<span>{{i.phone}}</span></h5>
+                       </p>
+                       <p>
+                           <h5><span>Alternate_Contact</span>:<span>{{i.alternate_phone}}</span></h5>
+                       </p>
+                       
+                       <a href="{% url 'cartpreorder' i.id %}" class="btn btn-warning">Continue_With_This_Address</a>
+                       
+                       <br>
+                       <form action="{% url 'addressdel' i.id %}" method="post">
+                           {% csrf_token %}
+                           <input type="submit" value="Address_Delete" />
+                       </form>
+                   </div>
+               </div>
+               {% endfor %}
+           </div>
+       </div>
+    </div>
+   </div>
+
+
+{% endblock %}

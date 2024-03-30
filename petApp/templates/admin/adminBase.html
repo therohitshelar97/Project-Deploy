@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title  %}  {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <style>
+        .no_data{
+            background-color: aquamarine;
+            text-align: center;
+        }
+        .h{
+            height: 100px;
+            text-align: center;
+            padding-top: 6%;
+            color: whitesmoke;
+        }
+    </style>
+
+</head>
+<body>
+    {% include 'admin/navbar.html' %}
+    {% block content %}
+
+    {% endblock %}
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/adminform.js' %}"></script>
+</body>
+</html>

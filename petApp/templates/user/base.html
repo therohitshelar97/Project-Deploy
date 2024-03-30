@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}  {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+
+    <link rel="icon" type="image/x-icon" href="{% static 'image/fav.jpg' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <style>
+         .detail_overflow{
+          overflow: scroll;
+         }
+
+         .orderaddress{
+          background-color: beige;
+         }
+      
+        .inhide{
+            display: none;
+        }
+
+        .align1{
+            align-items: center;
+        }
+
+        .cartNo{
+             background-color: aqua;
+             color:red;
+             text-align: center;
+             margin-top: 250px;
+        }
+
+        a{
+            color: black;
+            text-decoration: none;
+        }
+        a:hover{
+            color: aqua;
+        }
+
+        .h1{
+            color:blueviolet
+        }
+        .h2{
+            color:red;
+        }
+        
+       .paybtn{
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 180px;
+       }
+
+       .orderempty{
+        background-color: aquamarine;
+        color:red;
+        text-align: center;
+        height: 70px;
+        padding-top: 10px;
+        margin-top: 300px;
+       }
+
+       @media screen and (max-width:500px){
+        .paybtn{
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+       }
+       }
+
+       .form[type='text']{
+              border: none;
+              display: none;
+       }
+
+       .coomentdone{
+        display: none;
+       }
+
+       .commenthide{
+        display: none;
+       }
+       
+    
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-info">
+        <div class="container-fluid">
+          <a class="navbar-brand">The_Pet_Store</a>
+          <a class="navbar-brand" href="{% url 'cart' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+              </svg>
+              <sup style="color:orangered">
+                {{count}}
+              </sup>
+              Cart
+          </a>
+          <a class="navbar-brand" href="{% url 'allanimals' %}" >Home</a>
+          
+          <a class="navbar-brand" href="{% url 'orders' %}" >Orders</a>
+          <a class="navbar-brand" >Welcome : <span style="color:crimson">{{uname}}</span> </a>
+
+          <form class="d-flex" action="{% url 'search' %}" method="post">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+          <a class="navbar-brand" href="{% url 'login' %}" >Login</a>
+          <a class="navbar-brand" href="{% url 'logout' %}">
+            <svg style="color:blueviolet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+              </svg>
+            LogOut
+          </a>
+        </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <script>
+      function Comment(){
+        var cmt = document.getElementById('form')
+        cmt.style.display = "block"
+        cmt.style.border = "none"
+      }
+
+      function Done(){
+        var done = document.getElementById('done');
+        done.style.display = "block";
+      }
+
+      function CommentShow(){
+        var show = document.getElementsByClassName('commenthide')[0]
+        show.style.display = "block"
+      }
+    </script>
+
+  
+</body>
+</html>

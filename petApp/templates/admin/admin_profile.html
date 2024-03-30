@@ -1,0 +1,94 @@
+{% extends 'admin/adminBase.html' %}
+
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-3 ">
+            <div class="btn-danger h">
+                <h4>{{orders1}}</h4>
+                Orders_To_Be_Delivered
+            </div>   
+        </div>
+        <div class="col-lg-3 ">
+            <div class="bg-success h">
+                <h4>{{unsell}}</h4>
+                Unsell_pets
+            </div>   
+        </div>
+        <div class="col-lg-3 ">
+            <div class="bg-success h">
+                <h4>{{users}}</h4>
+                Total users
+            </div>   
+        </div>
+        <div class="col-lg-3 ">
+            <div class="bg-danger mh-100 h">
+                <h4>{{ohistory}}</h4>
+                Delivered_Orders
+            </div>   
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <table class="table table-hover">
+        <tr>
+            <th>Image</th>
+            <th>Pet Name</th>
+            <th>Paid Amount</th>
+            <th>Delivery_Date</th>
+            <th>Address</th>
+            <th>Action</th>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <td><img src={{i.image.url}} width="100px" height="100px" /></td>
+            <td>{{i.pname}}</td>
+            <td>{{i.price}}</td>
+            {% for t in orders %}
+            {% if i.id == t.animals_id %}
+            <td>{{t.delivery_date}}</td>
+            {% endif %}
+            {% endfor %}
+            <td>
+                {% for or in orders %}
+                  {% for ad in adata %}
+                    {% if i.id == or.animals_id %}
+                         {% if ad.id == or.address_id %}
+                            <h5>{{ad.cname}}</h5>
+                            <p>
+                                <span>{{ad.city}}</span>
+                                <span>{{ad.pincode}}</span>
+                                <span>{{ad.detail}}</span>
+                                <span>{{ad.state}}</span>
+                                <br>
+                                <span><b>Contact</b> : {{ad.phone}}</span><br>
+                                <span><b>Alternate Contact</b>  : {{ad.alternate_phone}}</span>
+                              </p>
+                         {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for or in orders %}
+                  {% for ad in adata %}
+                {% if i.id == or.animals_id %}
+                {% if ad.id == or.address_id %}
+        
+                <a href="{% url 'orderhistory' i.id ad.id  %}"><button class="btn btn-danger">To Be Delivere</button></a>
+                {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+{% endblock %}
